@@ -178,19 +178,19 @@ export class GFX {
             ddF_x += 2;
             f += ddF_x;
     
-            if(corners & 0x4) {
+            if(corners & 0b0100) { // top-left
                 this.drawPixel(x0 + x, y0 + y, color);
                 this.drawPixel(x0 + y, y0 + x, color);
             }
-            if(corners & 0x2) {
+            if(corners & 0b0010) { // top-right
                 this.drawPixel(x0 + x, y0 - y, color);
                 this.drawPixel(x0 + y, y0 - x, color);
             }
-            if(corners & 0x8) {
+            if(corners & 0b1000) { // bottom-right
                 this.drawPixel(x0 - y, y0 + x, color);
                 this.drawPixel(x0 - x, y0 + y, color);
             }
-            if(corners & 0x1) {
+            if(corners & 0b0001) { // bottom-left
                 this.drawPixel(x0 - y, y0 - x, color);
                 this.drawPixel(x0 - x, y0 - y, color);
             }
@@ -235,6 +235,42 @@ export class GFX {
                 py = y;
             }
             px = x;
+        }
+    }
+    fillCircleHelper2(x0, y0, r, corners, color) {
+        let f = 1 - r;
+        let ddF_x = 1;
+        let ddF_y = -2 * r;
+        let x = 0;
+        let y = r;
+
+        while(x <= y) {
+            if(corners & 0b0001) { // top-left
+                this.drawFastHLine(x0 - y, y0 - x, y + 1, color);
+                this.drawFastHLine(x0 - x, y0 - y, x + 1, color);
+            }
+            if(corners & 0b0010) { // top-right
+                this.drawFastHLine(x0, y0 - x, y + 1, color);
+                this.drawFastHLine(x0, y0 - y, x + 1, color);
+            }
+            if(corners & 0b0100) { // bottom-right
+                this.drawFastHLine(x0, y0 + x, y + 1, color);
+                this.drawFastHLine(x0, y0 + y, x + 1, color);
+            }
+            if(corners & 0b1000) { // bottom-left
+                this.drawFastHLine(x0 - y, y0 + x, y + 1, color);
+                this.drawFastHLine(x0 - x, y0 + y, x + 1, color);
+            }
+
+            if(f >= 0) {
+                y--;
+                ddF_y += 2;
+                f += ddF_y;
+            }
+
+            x++;
+            ddF_x += 2;
+            f += ddF_x;
         }
     }
 

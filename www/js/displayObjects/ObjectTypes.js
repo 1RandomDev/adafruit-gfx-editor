@@ -50,7 +50,8 @@ export const OBJECT_TYPES = {
             { key: 'y', name: 'Center Y', type: 'posY' },
             { key: 'radius', name: 'Radius', type: 'int' },
             { key: 'color', name: 'Color', type: 'color' },
-            { key: 'fill', name: 'Fill', type: 'bool' }
+            { key: 'fill', name: 'Fill', type: 'bool' },
+            { key: 'corners', name: 'Corners', type: 'corners' }
         ]
     },
     triangle: {

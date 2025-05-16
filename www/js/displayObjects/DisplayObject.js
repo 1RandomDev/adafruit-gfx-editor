@@ -19,7 +19,8 @@ export class DisplayObject {
     }
     formatMethod(instanceName, methodName, args) {
         args = args.map(arg => `<span class="hl-arg">${arg}</span>`).join(', ');
-        return `<span class="hl-instance">${instanceName}</span>.<span class="hl-method">${methodName}</span>(${args});`;
+        let instance = instanceName != null ? `<span class="hl-instance">${instanceName}</span>.` : '';
+        return instance+`<span class="hl-method">${methodName}</span>(${args});`;
     }
     escapeHTML(str) {
         return str

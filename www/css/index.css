@@ -3,6 +3,9 @@
     height: 1em;
     vertical-align: -0.125em;
 }
+.icon-default {
+    vertical-align: 0;
+}
 .form-control, .form-select, .input-group-text, .btn, .accordion-item {
     border-radius: 0 !important;
 }
@@ -64,4 +67,7 @@ input.hide-button::file-selector-button {
 }
 .hl-datatype {
     color: #a00500;
+}
+.hl-comment {
+    color: #6d6d6d;
 }

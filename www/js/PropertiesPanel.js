@@ -76,7 +76,7 @@ export class PropertiesPanel {
         const propKey = propElement.dataset.key;
         if(objectId == null || propKey == null) return;
         const object = this.displayObjects.find(object => object.id == objectId);
-        
+
         // Inputs
         let val = null;
         switch(propElement.type) {
@@ -86,7 +86,15 @@ export class PropertiesPanel {
                 if(val < propElement.min) propElement.value = propElement.min;
                 break;
             case 'checkbox':
-                val = propElement.checked;
+                if(propKey == 'corners') {
+                    val = 0;
+                    for(let element of objectElement.querySelectorAll(`[data-key='${propKey}']`)) {
+                        const i = parseInt(element.dataset.bit);
+                        val |= (element.checked & 1) << i;
+                    }
+                } else {
+                    val = propElement.checked;
+                }
                 break;
             case 'color':
                 const rgb888 = parseInt(propElement.value.slice(1), 16);
@@ -207,6 +215,13 @@ export class PropertiesPanel {
                 return `<input data-key="${prop.key}" class="form-control" type="text" value="${value}">`;
             case 'image':
                 return `<input data-key="${prop.key}" class="form-control hide-button" type="file" value="${value}">`;
+            case 'corners':
+                return `<div class="input-group-text bg-white flex-grow-1">
+                            <i data-lucide="circle-arrow-out-up-left" class="icon-default me-1"></i><input data-key="${prop.key}" data-bit="0" class="form-check-input me-4" title="Top Left" type="checkbox" ${((value >> 0) & 1) ? 'checked' : ''}>
+                            <i data-lucide="circle-arrow-out-up-right" class="icon-default me-1"></i><input data-key="${prop.key}" data-bit="1" class="form-check-input me-4" title="Top Right" type="checkbox" ${((value >> 1) & 1) ? 'checked' : ''}>
+                            <i data-lucide="circle-arrow-out-down-left" class="icon-default me-1"></i><input data-key="${prop.key}" data-bit="3" class="form-check-input me-4" title="Bottom Left" type="checkbox" ${((value >> 3) & 1) ? 'checked' : ''}>
+                            <i data-lucide="circle-arrow-out-down-right" class="icon-default me-1"></i><input data-key="${prop.key}" data-bit="2" class="form-check-input" title="Bottom Right" type="checkbox" ${((value >> 2) & 1) ? 'checked' : ''}>
+                        </div>`;
         }
     }
 

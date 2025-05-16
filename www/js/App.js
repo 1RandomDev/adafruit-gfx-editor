@@ -106,8 +106,8 @@ class App {
         const generateCodeModal = document.getElementById('generateCodeModal');
         generateCodeModal.addEventListener('show.bs.modal', event => {
             const codeSnippets = this.generateArduinoCode();
-            event.target.querySelector('.headerWindow').innerHTML = codeSnippets.header || '<span class="form-text">// No constants needed</span>';
-            event.target.querySelector('.codeWindow').innerHTML = codeSnippets.code || '<span class="form-text">// No objects to draw</span>';
+            event.target.querySelector('.headerWindow').innerHTML = codeSnippets.header || '<span class="hl-comment">// No constants needed</span>';
+            event.target.querySelector('.codeWindow').innerHTML = codeSnippets.code || '<span class="hl-comment">// No objects to draw</span>';
         });
 
         Utils.makeCopyButton(generateCodeModal.querySelector('.copyBtnHeader'), generateCodeModal.querySelector('.headerWindow'));
