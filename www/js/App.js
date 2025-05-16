@@ -19,6 +19,7 @@ class App {
         this.ctx = previewScreen.getContext("2d");
         this.gfx = new GFX(this.ctx, this.screenSettings.width, this.screenSettings.height);
 
+        if(window.electronAPI) this.initDesktopAppFeatures();
         Utils.makeDraggable(previewScreen);
         this.initCodeGeneration();
         this.initSaveAndRestore();
@@ -99,6 +100,16 @@ class App {
         return JSON.stringify({
             screenSettings: this.screenSettings.toJson(),
             objects: saveObjects
+        });
+    }
+
+    initDesktopAppFeatures() {
+        const sendViaMqttBtn = document.getElementById('sendViaMqttBtn');
+        sendViaMqttBtn.classList.remove('disabled');
+        bootstrap.Tooltip.getInstance(sendViaMqttBtn.parentElement).dispose();
+        sendViaMqttBtn.addEventListener('click', async () => {
+            await window.electronAPI.sendDisplayCommands(this.generateDisplayCommands());
+            Utils.showToast({ message: 'Current view sent to display', type: 'success' });
         });
     }
 

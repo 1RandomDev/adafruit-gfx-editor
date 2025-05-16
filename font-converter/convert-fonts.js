@@ -1,4 +1,4 @@
-const fs = require('node:fs');
+import fs from 'node:fs';
 
 let outputFile = 'window.GFX_FONTS = {};\n\n';
 fs.readdirSync('fonts').forEach(file => {

@@ -1,0 +1,19 @@
+{
+  "name": "adafruit-gfx-editor",
+  "version": "0.0.0",
+  "license": "GPL-3",
+  "description": "",
+  "author": "1RandomDev",
+  "type": "module",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron app/main.js"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "electron": "^36.2.1"
+  },
+  "dependencies": {
+    "mqtt": "^5.13.0"
+  }
+}
