@@ -1,0 +1,53 @@
+[data-lucide] {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+.form-control, .form-select, .input-group-text, .btn, .accordion-item {
+    border-radius: 0 !important;
+}
+.nav-link:hover {
+    background-color: var(--bs-nav-link-disabled-color);
+}
+.accordion-header {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+input.hide-button::file-selector-button {
+    display: none;
+}
+.mainContainer {
+    height: calc(100vh - 56px);
+}
+.screenSettingsMenu {
+    min-width: 280px;
+}
+.paramName {
+    min-width: 35%;
+}
+#previewScreen {
+    background-color: black;
+}
+#clearDisplayModal {
+    --bs-modal-width: 520px;
+}
+#generateCodeModal .codeWindow, #generateCodeModal .headerWindow {
+    max-height: 300px;
+    font-size: 15px;
+}
+#objectList .accordion-button {
+    cursor: grab !important;
+}
+.hl-instance {
+    color: #369fc3;
+}
+.hl-method, .hl-varname {
+    color: #954121;
+}
+.hl-arg, .hl-val {
+    color: #40a070;
+}
+.hl-datatype {
+    color: #a00500;
+}

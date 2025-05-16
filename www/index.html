@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/icon.svg" sizes="any" type="image/svg+xml">
+    <title>Adafruit GFX Editor</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="img/icon.svg" height="25">
+                Adafruit GFX Editor
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i data-lucide="monitor"></i> Configure Screen</a>
+                        <div class="dropdown-menu p-4">
+                            <div>
+                                <label class="small" for="previewScale">Preview Scale <i data-lucide="expand"></i></label>
+                                <input class="form-range" id="previewScale" type="range" min="1" max="15">
+                            </div>
+                            <hr class="dropdown-divider">
+                            <form class="screenSettingsMenu" id="screenSettingsForm" autocomplete="off">
+                                <div class="mb-2">
+                                    <label class="small" for="settingGfxName">GFX Instance Name <i data-lucide="code"></i></label>
+                                    <input class="form-control form-control-sm" id="settingGfxName" type="text" name="gfxName" placeholder="gfx">
+                                </div>
+                                <div class="d-flex align-items-end gap-3">
+                                    <div>
+                                        <label class="small" for="settingScreenWidth">Width <i data-lucide="move-horizontal"></i></label>
+                                        <div class="input-group input-group-sm">
+                                            <input class="form-control" id="settingScreenWidth" type="number" min="10" name="width" placeholder="240">
+                                            <span class="input-group-text">px</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="small" for="settingScreenWidth">Height <i data-lucide="move-vertical"></i></label>
+                                        <div class="input-group input-group-sm">
+                                            <input class="form-control" id="settingScreenWidth" type="number" min="10" name="height" placeholder="240">
+                                            <span class="input-group-text">px</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button class="btn btn-primary btn-sm" type="submit" disabled>Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i data-lucide="database"></i> Save & Restore</a>
+                        <div class="dropdown-menu">
+                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#saveSessionModal"><i data-lucide="save"></i> Save in Browser</button>
+                            <button class="dropdown-item" id="saveViewBtn"><i data-lucide="download"></i> Save as File</button>
+                            <button class="dropdown-item" id="loadViewBtn"><i data-lucide="upload"></i> Load from File</button>
+                        </div>
+                    </li>
+                    
+                </ul>
+                <div class="d-flex btn-group">
+                    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#generateCodeModal"><i data-lucide="code-xml"></i> Generate Code</button>
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-title="Coming Soon">
+                        <button class="btn btn-outline-primary disabled"><i data-lucide="monitor-up"></i> Send via MQTT</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid">
+        <div class="row" style="height: calc(100vh - 56px);">
+            <div class="col-3 bg-light">
+
+            </div>
+
+            <div class="col-6 h-100 d-flex justify-content-center align-items-center p-0" id="previewContainer">
+                <div class="overflow-auto mh-100 mw-100">
+                    <canvas id="previewScreen" width="240" height="240"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-3 bg-light p-4 h-100 d-flex flex-column">
+                <div class="input-group mb-3">
+                    <select class="form-select" id="pp_objectSelect">
+                        <option value="">-- Select Object --</option>
+                    </select>
+                    <button class="btn btn-success" id="pp_objectAddBtn" disabled autocomplete="off">Add Object</button>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#clearDisplayModal">Clear</button>
+                </div>
+                <div class="accordion overflow-auto" id="pp_objectList"></div>
+                <div class="form-text text-center">Objects can be reordered via Drag and Drop on their name.</div>
+            </div>
+          </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" tabindex="-1" id="saveSessionModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Save in Browser</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The current view will be saved in your browsers local storage and automatically loaded when you visit the site for the next time. This is only for temporary saves, make sure to not clear your browser data before saving important changes to a proper file.
+                    </p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="saveSessionHideWarning">
+                        <label class="form-check-label" for="saveSessionHideWarning">Don't show again</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-lucide="circle-x"></i> Cancel</button>
+                    <button type="button" class="btn btn-success" id="saveSessionBtn" data-bs-dismiss="modal"><i data-lucide="save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="clearDisplayModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Clear Display</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure that you want to delete all objects from the screen?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-lucide="circle-x"></i> Cancel</button>
+                    <button type="button" class="btn btn-danger" id="pp_objectClearBtn" data-bs-dismiss="modal"><i data-lucide="trash-2"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-xl" tabindex="-1" id="generateCodeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Generated AdafruitGFX Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Only the code for drawing the created objects on the screen is generated, you first need to create an Adafruit GFX instance with the correct driver and initialize the display yourself. The name of the Adafruit GFX instance can be changed under "Configure Screen" if desired. If custom fonts were selected make sure to include them at the beginning of the program.</p>
+                    
+                    <label class="form-text">
+                        Constants
+                        <span tabindex="0" data-bs-toggle="tooltip" data-bs-title="Paste at the beginning of the sketch before the setup() method"><i data-lucide="info"></i></span>
+                    </label>
+                    <div class="card bg-light mb-3">
+                        <div class="headerWindow font-monospace p-2 overflow-auto"></div>
+                    </div>
+
+                    <label class="form-text">
+                        Draw Code
+                        <span tabindex="0" data-bs-toggle="tooltip" data-bs-title="Paste in setup() after initializing the display"><i data-lucide="info"></i></span>
+                    </label>
+                    <div class="card bg-light">
+                        <div class="codeWindow font-monospace p-2 overflow-auto"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-lucide="circle-x"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+    <script src="js/lib/sortable.min.js"></script>
+    <script src="js/lib/popper.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/lucide.min.js"></script>
+    <script src="js/gfx-fonts.js"></script>
+    <script type="module" src="js/App.js"></script>
+</body>
+</html>
