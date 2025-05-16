@@ -127,5 +127,9 @@ class App {
         }
         return codeSnippets;
     }
+    generateDisplayCommands() {
+        Text.lastProperties = {};
+        return this.propPanel.displayObjects.map(object => object.toDisplayCommand());
+    }
 }
 window.app = new App();

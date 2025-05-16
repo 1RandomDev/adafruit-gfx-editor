@@ -14,4 +14,11 @@ export class Fill extends DisplayObject {
         const color = this.formatHex(this.color, 4);
         return this.formatMethod(gfxName, 'fillScreen', [color]);
     }
+
+    toDisplayCommand() {
+        return {
+            t: this.type,
+            c: this.color
+        };
+    }
 }

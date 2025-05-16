@@ -18,4 +18,15 @@ export class Line extends DisplayObject {
         const color = this.formatHex(this.color, 4);
         return this.formatMethod(gfxName, 'drawLine', [this.x0, this.y0, this.x1, this.y1, color]);
     }
+
+    toDisplayCommand() {
+        return {
+            t: this.type,
+            x0: this.x0,
+            y0: this.y0,
+            x1: this.x1,
+            y1: this.y1,
+            c: this.color
+        };
+    }
 }

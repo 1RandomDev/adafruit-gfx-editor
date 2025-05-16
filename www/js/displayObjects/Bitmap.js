@@ -25,7 +25,6 @@ export class Bitmap extends DisplayObject {
     }
     
     draw(gfx) {
-        console.log(this.bitmap)
         if(!this.bitmap) {
             gfx.drawRect(this.x, this.y, this.width, this.height, this.color);
             gfx.drawLine(this.x, this.y, this.x+this.width-1, this.y+this.height-1, this.color);
@@ -136,5 +135,18 @@ export class Bitmap extends DisplayObject {
             }
         }
         return bitmap;
+    }
+
+    toDisplayCommand() {
+        const cmd = {
+            t: this.type,
+            x: this.x,
+            y: this.y,
+            w: this.width,
+            h: this.height,
+            bitmap: this.bitmap
+        };
+        if(this.monochrome) cmd.c = this.color;
+        return cmd;
     }
 }

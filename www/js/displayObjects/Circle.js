@@ -37,4 +37,16 @@ export class Circle extends DisplayObject {
             }
         }
     }
+
+    toDisplayCommand() {
+        return {
+            t: this.type,
+            x: this.x,
+            y: this.y,
+            r: this.radius,
+            c: this.color,
+            f: this.fill,
+            co: this.corners
+        };
+    }
 }

@@ -25,21 +25,46 @@ export class Text extends DisplayObject {
         let code = '';
 
         // Try optimizing the code and leaving out parameters that has not changed
-        if(this.fill != Text.lastTextSettings.font) {
-            Text.lastTextSettings.font = this.font;
+        if(this.font != Text.lastProperties.font) {
+            Text.lastProperties.font = this.font;
             code += this.formatMethod(gfxName, 'setFont', [this.font ? '&'+this.font : 'NULL'])+'<br>';
         }
-        if(this.fontSize != Text.lastTextSettings.size) {
-            Text.lastTextSettings.size = this.fontSize;
+        if(this.fontSize != Text.lastProperties.size) {
+            Text.lastProperties.size = this.fontSize;
             code += this.formatMethod(gfxName, 'setTextSize', [this.fontSize])+'<br>';
         }
-        if(this.color != Text.lastTextSettings.color) {
-            Text.lastTextSettings.color = this.color;
+        if(this.color != Text.lastProperties.color) {
+            Text.lastProperties.color = this.color;
             code += this.formatMethod(gfxName, 'setTextColor', [this.formatHex(this.color, 4)])+'<br>';
         }
 
         code += this.formatMethod(gfxName, 'setCursor', [this.x, this.y])+'<br>';
         code += this.formatMethod(gfxName, 'printText', [`"${this.escapeHTML(this.content)}"`]);
         return code;
+    }
+
+    toDisplayCommand() {
+        const cmd = {
+            t: this.type,
+            x: this.x,
+            y: this.y,
+            co: this.content
+        };
+
+        // Try optimizing the code and leaving out parameters that has not changed
+        if(this.font != Text.lastProperties.font) {
+            Text.lastProperties.font = this.font;
+            cmd.f = this.font;
+        }
+        if(this.fontSize != Text.lastProperties.size) {
+            Text.lastProperties.size = this.fontSize;
+            cmd.s = this.fontSize;
+        }
+        if(this.color != Text.lastProperties.color) {
+            Text.lastProperties.color = this.color;
+            cmd.c = this.color;
+        }
+
+        return cmd;
     }
 }

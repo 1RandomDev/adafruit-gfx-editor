@@ -23,4 +23,18 @@ export class Triangle extends DisplayObject {
         const type = this.fill ? 'fill' : 'draw';
         return this.formatMethod(gfxName, type+'Triangle', [this.x0, this.y0, this.x1, this.y1, this.x2, this.y2, color]);
     }
+
+    toDisplayCommand() {
+        return {
+            t: this.type,
+            x0: this.x0,
+            y0: this.y0,
+            x1: this.x1,
+            y1: this.y1,
+            x2: this.x2,
+            y2: this.y2,
+            c: this.color,
+            f: this.fill
+        };
+    }
 }
