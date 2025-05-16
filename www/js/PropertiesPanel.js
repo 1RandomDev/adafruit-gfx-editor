@@ -66,7 +66,9 @@ export class PropertiesPanel {
     }
 
     async handleObjectUpdate(event) {
+        // Find associated object
         let propElement = event.target;
+        if(event.type == 'keyup' && propElement.type != 'text') return;
         let objectElement = propElement.parentElement.parentElement.parentElement.parentElement;
         if(!objectElement.dataset.objId) objectElement = objectElement.parentElement;
         

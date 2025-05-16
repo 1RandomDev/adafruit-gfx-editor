@@ -113,7 +113,7 @@ class App {
         Text.lastProperties = {};
         let codeSnippets = {header: '', code: ''};
         for(let object of this.propPanel.displayObjects) {
-            const res = object.toCode();
+            const res = object.toCode(this.screenSettings.gfxName);
             if(typeof res == 'object') {
                 codeSnippets.header += `${res.header}<br>`;
                 codeSnippets.code += `${res.code}<br>`;
