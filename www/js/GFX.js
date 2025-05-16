@@ -280,7 +280,7 @@ export class GFX {
         this.drawLine(x1, y1, x2, y2, color);
         this.drawLine(x2, y2, x0, y0, color);
     }
-    fillTriangle(x0, y0, x1, y1, x2, y2, color) { // Missing pixel on tip
+    fillTriangle(x0, y0, x1, y1, x2, y2, color) {
         let a, b, y;
     
         if(y0 > y1) {
@@ -315,7 +315,7 @@ export class GFX {
         let dx01 = x1 - x0, dy01 = y1 - y0, dx02 = x2 - x0, dy02 = y2 - y0,
             dx12 = x2 - x1, dy12 = y2 - y1;
         let sa = 0, sb = 0,
-            last = (y1 == y2) ? y1 : (y - 1);
+            last = (y1 == y2) ? y1 : (y1 - 1);
     
         for(y = y0; y <= last; y++) {
             a = Math.floor(x0 + sa / dy01);

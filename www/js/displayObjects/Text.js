@@ -14,7 +14,7 @@ export class Text extends DisplayObject {
     }
 
     draw(gfx) {
-        gfx.setFont(window.GFX_FONTS[this.f]);
+        gfx.setFont(window.GFX_FONTS[this.font]);
         gfx.setTextSize(this.fontSize);
         gfx.setTextColor(this.color);
         gfx.setCursor(this.x, this.y);

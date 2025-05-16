@@ -83,7 +83,7 @@ export class PropertiesPanel {
             case 'number':
                 val = parseInt(propElement.value);
                 if(val > propElement.max) propElement.value = propElement.max;
-                if(val < propElement.min) propElement.value = propElement.min;
+                if(val < propElement.min || isNaN(val)) propElement.value = propElement.min;
                 break;
             case 'checkbox':
                 if(propKey == 'corners') {
