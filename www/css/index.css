@@ -39,6 +39,20 @@ input.hide-button::file-selector-button {
 #objectList .accordion-button {
     cursor: grab !important;
 }
+.copy-btn {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    z-index: 10;
+    outline: 0;
+    border-radius: 6px !important;
+}
+.copy-btn:hover {
+    background-color: #0000001c;
+}
+.copy-btn:active {
+    border-color: transparent !important;
+}
 .hl-instance {
     color: #369fc3;
 }

@@ -103,11 +103,15 @@ class App {
     }
 
     initCodeGeneration() {
-        document.getElementById('generateCodeModal').addEventListener('show.bs.modal', event => {
+        const generateCodeModal = document.getElementById('generateCodeModal');
+        generateCodeModal.addEventListener('show.bs.modal', event => {
             const codeSnippets = this.generateArduinoCode();
             event.target.querySelector('.headerWindow').innerHTML = codeSnippets.header || '<span class="form-text">// No constants needed</span>';
             event.target.querySelector('.codeWindow').innerHTML = codeSnippets.code || '<span class="form-text">// No objects to draw</span>';
         });
+
+        Utils.makeCopyButton(generateCodeModal.querySelector('.copyBtnHeader'), generateCodeModal.querySelector('.headerWindow'));
+        Utils.makeCopyButton(generateCodeModal.querySelector('.copyBtnCode'), generateCodeModal.querySelector('.codeWindow'));
     }
     generateArduinoCode() {
         Text.lastProperties = {};
