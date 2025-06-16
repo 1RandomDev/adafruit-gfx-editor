@@ -175,7 +175,7 @@ export class PropertiesPanel {
         objectType.properties.forEach(prop => {
             html +=
                 `<div class="input-group">
-                    <div class="input-group-text paramName">${prop.name}</div>
+                    <div class="input-group-text paramName" title="${prop.tooltip || ''}">${prop.name}</div>
                     ${this.getPropertyHtml(prop, object[prop.key])}
                 </div>`;
         });

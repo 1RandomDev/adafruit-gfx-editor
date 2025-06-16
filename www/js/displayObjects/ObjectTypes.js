@@ -92,9 +92,9 @@ export const OBJECT_TYPES = {
             { key: 'width', name: 'Width', type: 'width' },
             { key: 'height', name: 'Height', type: 'height' },
             { key: 'file', name: 'Image File', type: 'image' },
-            { key: 'color', name: 'Color', type: 'color' },
-            { key: 'monochrome', name: 'Static Color', type: 'bool' },
-            { key: 'colorThreshold', name: 'Color Threshold', type: '8bitRange' }
+            { key: 'monochrome', name: 'Static Color', type: 'bool', tooltip: 'Convert image to monochrome colors (uses 16 times less program memory than color image)' },
+            { key: 'color', name: 'Color', type: 'color', tooltip: 'Monochrome image color (only takes effect when Static Color is checked)' },
+            { key: 'colorThreshold', name: 'Color Threshold', type: '8bitRange', tooltip: 'R, G and B threshold for converting image colors to monochrome (only takes effect when Static Color is checked)' }
         ]
     }
 };
