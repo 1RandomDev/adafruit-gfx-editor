@@ -35,6 +35,7 @@ export class PropertiesPanel {
 
         objectList.addEventListener('change', event => this.handleObjectUpdate(event));
         objectList.addEventListener('keyup', event => this.handleObjectUpdate(event));
+        objectList.addEventListener('input', event => this.handleObjectUpdate(event));
         objectList.addEventListener('click', event => {
             const button = event.target;
             if(button.classList.contains('deleteBtn')) {
@@ -69,6 +70,7 @@ export class PropertiesPanel {
         // Find associated object
         let propElement = event.target;
         if(event.type == 'keyup' && propElement.type != 'text') return;
+        if(event.type == 'input' && propElement.type != 'range') return;
         let objectElement = propElement.parentElement.parentElement.parentElement.parentElement;
         if(!objectElement.dataset.objId) objectElement = objectElement.parentElement;
         
@@ -140,7 +142,8 @@ export class PropertiesPanel {
                     };
                     reader.readAsDataURL(file);
                 });
-            } else if(object.image && ['height', 'width', 'monochrome'].includes(propKey)) {
+            } else if(object.image && ['height', 'width', 'monochrome', 'colorThreshold'].includes(propKey)) {
+                if(propKey == 'colorThreshold' && !object.monochrome) return;
                 try {
                     const preserveDimension = propKey != 'monochrome' ? propKey : null;
                     const newDimensions = await object.loadImage(null, preserveDimension);
@@ -202,6 +205,8 @@ export class PropertiesPanel {
                 const rgb565 = Utils.formatHex(value, 4);
                 return `<input data-key="${prop.key}" class="form-control form-control-color" type="color" value="#${rgb888}">
                         <input data-key="${prop.key}" class="form-control colorCode" type="text" placeholder="0xFFFF" value="0x${rgb565}" title="16bit RGB565 color, to enter regular 24bit color codes use the color picker">`;
+            case '8bitRange':
+                return `<div class="input-group-text bg-white flex-grow-1"><input data-key="${prop.key}" class="form-range" type="range" min="0" max="255" value="${value}"></div>`;
             case 'int':
                 return `<input data-key="${prop.key}" class="form-control" type="number" min="0" max="100" value="${value}">`;
             case 'bool':

@@ -1,7 +1,7 @@
 import { DisplayObject } from './DisplayObject.js';
 
 export class Bitmap extends DisplayObject {
-    constructor(x, y, width, height, filename, image, bitmap, color, monochrome) {
+    constructor(x, y, width, height, filename, image, bitmap, color, monochrome, colorThreshold) {
         super('bitmap');
         this.x = x || 0;
         this.y = y || 0;
@@ -12,6 +12,7 @@ export class Bitmap extends DisplayObject {
         this.bitmap = bitmap;
         this.color = color || 0xF800;
         this.monochrome = monochrome || false;
+        this.colorThreshold = colorThreshold || 50;
     }
 
     fromJson(json) {
@@ -111,7 +112,7 @@ export class Bitmap extends DisplayObject {
                     const b = imgData[pixelIndex*4 + 2];
                     const a = imgData[pixelIndex*4 + 3];
 
-                    const bit = r > 50 && g > 50 && b > 50 && a > 50;
+                    const bit = r > this.colorThreshold && g > this.colorThreshold && b > this.colorThreshold && a > this.colorThreshold;
                     if(bit) {
                         bitmap[byteIndex] |= (1 << bitIndex);
                     }

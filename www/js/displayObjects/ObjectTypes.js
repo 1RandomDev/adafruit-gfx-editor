@@ -93,7 +93,8 @@ export const OBJECT_TYPES = {
             { key: 'height', name: 'Height', type: 'height' },
             { key: 'file', name: 'Image File', type: 'image' },
             { key: 'color', name: 'Color', type: 'color' },
-            { key: 'monochrome', name: 'Static Color', type: 'bool' }
+            { key: 'monochrome', name: 'Static Color', type: 'bool' },
+            { key: 'colorThreshold', name: 'Color Threshold', type: '8bitRange' }
         ]
     }
 };
