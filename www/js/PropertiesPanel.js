@@ -231,8 +231,9 @@ export class PropertiesPanel {
     }
 
     getObjectTitleStyle(object) {
-        let style = '';
-        if(object.color) style += `color: #${Utils.formatHex(Utils.rgb565ToRgb888(object.color), 6)};`;
+        let style = '', color = Utils.rgb565ToRgb888(object.color);
+        if(Utils.colorCloseToWhite(color)) color = 0xC8C8C8;
+        if(object.color) style += `color: #${Utils.formatHex(color, 6)};`;
         if(object.fill) style += 'font-weight: bold;';
         return style;
     }

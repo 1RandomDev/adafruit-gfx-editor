@@ -24,6 +24,11 @@ export class Utils {
     static formatHex(val, length) {
         return val.toString(16).toUpperCase().padStart(length, '0');
     }
+    static colorCloseToWhite(color, threshold = 200) {
+        return ((color >> 16) & 0xFF) > threshold &&
+               ((color >> 8)  & 0xFF) > threshold &&
+                (color        & 0xFF) > threshold;
+    }
 
     static makeDraggable(element) {
         let isDragging = false;
