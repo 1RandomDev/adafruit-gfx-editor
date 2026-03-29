@@ -79,8 +79,12 @@
     <!-- Main Container -->
     <div class="container-fluid">
         <div class="row" style="height: calc(100vh - 56px);">
-            <div class="col-3 bg-light">
-
+            <div class="col-3 bg-light h-100 p-4 overflow-auto text-justify">
+                <p>Adafruit GFX Editor is a vector based visual editor for Adafruit GFX compatible displays including a real time preview of the screen.</p>
+                
+                <b>First Steps</b>
+                <p>Start by entering your screen Width and Height under "Configure Screen". Now you can create objects in the object editor on the right and change their properties to your desire. When finished hit "Generate Code" to generate the Arduino code for your view. In the Desktop App (in development) you can directly send your current view to the display for a real preview.</p>
+                
             </div>
 
             <div class="col-6 h-100 d-flex justify-content-center align-items-center p-0" id="previewContainer">
@@ -97,7 +101,8 @@
                     <button class="btn btn-success" id="pp_objectAddBtn" disabled autocomplete="off">Add Object</button>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#clearDisplayModal">Clear</button>
                 </div>
-                <div class="accordion overflow-auto" id="pp_objectList"></div>
+                <div class="accordion overflow-auto" id="pp_objectList">
+                </div>
                 <div class="form-text text-center">Objects can be reordered via Drag and Drop on their name.</div>
             </div>
           </div>

@@ -9,6 +9,9 @@
 .form-control, .form-select, .input-group-text, .btn, .accordion-item {
     border-radius: 0 !important;
 }
+.text-justify {
+    text-align: justify;
+}
 .nav-link:hover {
     background-color: var(--bs-nav-link-disabled-color);
 }
