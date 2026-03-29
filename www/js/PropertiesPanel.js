@@ -29,7 +29,7 @@ export class PropertiesPanel {
             const lastElement = objectList.querySelector('.accordion-item:last-of-type .collapse');
             lastElement.addEventListener('shown.bs.collapse', () => {
                 objectList.scrollTop = objectList.scrollHeight;
-            });
+            }, {once : true});
             new bootstrap.Collapse(lastElement).show();
         });
 
