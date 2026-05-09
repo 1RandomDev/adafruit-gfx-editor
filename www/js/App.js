@@ -20,12 +20,7 @@ class App {
         this.ctx = previewScreen.getContext("2d");
         this.gfx = new GFX(this.ctx, this.screenSettings.width, this.screenSettings.height);
 
-        if(window.electronAPI) this.initDesktopAppFeatures();
-        Utils.makeDraggable(previewScreen);
-        this.initCodeGeneration();
-        this.initSaveAndRestore();
-        this.scalePreview()
-        this.renderPreview();
+        this.init();
     }
 
     renderPreview() {
@@ -41,7 +36,7 @@ class App {
         this.ctx.canvas.height = this.screenSettings.height * this.screenSettings.previewScale;
     }
 
-    initSaveAndRestore() {
+    async initSaveAndRestore() {
         document.getElementById('saveViewBtn').addEventListener('click', () => {
             const time = new Date().toISOString().substring(11, 19).replace(/:/g, '_');
             Utils.downloadFile(this.exportState(), `gfx-editor-${time}.json`, 'application/json');
@@ -80,6 +75,10 @@ class App {
             } catch(err) {
                 console.error('Error importing state:', err);
             }
+        } else {
+            const res = await fetch('default-scene.json');
+            const defaultScene = await res.text();
+            this.importState(defaultScene);
         }
     }
     importState(save) {
@@ -102,6 +101,15 @@ class App {
             screenSettings: this.screenSettings.toJson(),
             objects: saveObjects
         });
+    }
+
+    async init() {
+        if(window.electronAPI) this.initDesktopAppFeatures();
+        Utils.makeDraggable(previewScreen);
+        this.initCodeGeneration();
+        await this.initSaveAndRestore();
+        this.scalePreview()
+        this.renderPreview();
     }
 
     initDesktopAppFeatures() {

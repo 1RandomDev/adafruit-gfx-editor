@@ -5,9 +5,9 @@
   "description": "",
   "author": "1RandomDev",
   "type": "module",
-  "main": "app/main.js",
+  "main": "main.js",
   "scripts": {
-    "app": "electron app/main.js"
+    "start": "electron main.js"
   },
   "keywords": [],
   "devDependencies": {
