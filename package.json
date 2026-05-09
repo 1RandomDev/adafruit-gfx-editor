@@ -7,13 +7,13 @@
   "type": "module",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron app/main.js"
+    "app": "electron app/main.js"
   },
   "keywords": [],
   "devDependencies": {
-    "electron": "^36.2.1"
+    "electron": "^42.0.1"
   },
   "dependencies": {
-    "mqtt": "^5.13.0"
+    "mqtt": "^5.15.1"
   }
 }

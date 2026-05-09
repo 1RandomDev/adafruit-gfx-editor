@@ -22,6 +22,32 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-none" id="appSettingsBtn" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i data-lucide="settings"></i> App Settings</a>
+                        <div class="dropdown-menu p-4">
+                            <form class="appSettingsMenu" id="appSettingsForm" autocomplete="off">
+                                <b class="small">MQTT</b>
+                                <div class="mb-2">
+                                    <label class="small" for="settingMqttHost">Host <i data-lucide="globe"></i></label>
+                                    <input class="form-control form-control-sm" id="settingMqttHost" type="text" name="mqttHost" placeholder="mqtt.myserver.com">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="small" for="settingMqttPort">Port <i data-lucide="shapes"></i></label>
+                                    <input class="form-control form-control-sm" id="settingMqttPort" type="number" name="mqttPort" placeholder="1883">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="small" for="settingMqttUsername">Username <i data-lucide="user"></i></label>
+                                    <input class="form-control form-control-sm" id="settingMqttUsername" type="text" name="mqttUsername">
+                                </div>
+                                <div class="mb-2">
+                                    <label class="small" for="settingMqttPassword">Password <i data-lucide="key-round"></i></label>
+                                    <input class="form-control form-control-sm" id="settingMqttPassword" type="password" name="mqttPassword">
+                                </div>
+                                <button class="btn btn-primary btn-sm mt-2" type="submit" disabled>Save</button>
+                                <!-- <div class="form-text text-success">Connected sucessfull</div> -->
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i data-lucide="monitor"></i> Configure Screen</a>
                         <div class="dropdown-menu p-4">
                             <div>
@@ -64,7 +90,6 @@
                             <button class="dropdown-item" id="loadViewBtn"><i data-lucide="upload"></i> Load from File</button>
                         </div>
                     </li>
-                    
                 </ul>
                 <div class="d-flex btn-group">
                     <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#generateCodeModal"><i data-lucide="code-xml"></i> Generate Code</button>

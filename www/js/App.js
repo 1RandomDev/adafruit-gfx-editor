@@ -1,6 +1,7 @@
 import { OBJECT_TYPES } from './displayObjects/ObjectTypes.js';
 import { PropertiesPanel } from './PropertiesPanel.js';
 import { ScreenSettings } from './ScreenSettings.js';
+import { AppSettings } from './AppSettings.js';
 import { Text } from './displayObjects/Text.js';
 import { GFX } from './GFX.js';
 import { Utils } from './Utils.js';
@@ -104,12 +105,19 @@ class App {
     }
 
     initDesktopAppFeatures() {
+        this.appSettings = new AppSettings();
+
         const sendViaMqttBtn = document.getElementById('sendViaMqttBtn');
         sendViaMqttBtn.classList.remove('disabled');
         bootstrap.Tooltip.getInstance(sendViaMqttBtn.parentElement).dispose();
         sendViaMqttBtn.addEventListener('click', async () => {
-            await window.electronAPI.sendDisplayCommands(this.generateDisplayCommands());
-            Utils.showToast({ message: 'Current view sent to display', type: 'success' });
+            const displayCommands = this.generateDisplayCommands();
+            const result = await window.electronAPI.sendDisplayCommands(displayCommands);
+            if(result.success) {
+                Utils.showToast({ message: `<b>${displayCommands.length}</b> element(s) were sent to the display`, type: 'success' });
+            } else {
+                Utils.showToast({ message: 'Error sending view to display: '+result.error, type: 'danger' });
+            }
         });
     }
 

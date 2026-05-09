@@ -26,7 +26,7 @@ input.hide-button::file-selector-button {
 .mainContainer {
     height: calc(100vh - 56px);
 }
-.screenSettingsMenu {
+.screenSettingsMenu, .appSettingsMenu {
     min-width: 280px;
 }
 .paramName {
